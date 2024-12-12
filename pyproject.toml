@@ -21,7 +21,7 @@ classifiers = [
 dependencies = [
   "datetime",
   "pathlib",
-  "nonebot2>=2.3.0"
+  "nonebot2>=2.3.0",
   "nonebot_plugin_localstore>=0.7.1"
 ]
 
