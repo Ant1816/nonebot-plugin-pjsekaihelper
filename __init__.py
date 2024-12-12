@@ -30,7 +30,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "priority": 10,
     },
 )
