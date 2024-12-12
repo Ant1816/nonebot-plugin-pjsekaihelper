@@ -1,0 +1,35 @@
+[project]
+name = "nonebot-plugin-pjsekaihelper"
+version = "1.0.2"
+description = "世界计划插件，拥有组建车队等功能，持续开发中"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+keywords = ["nonebot2", "projectsekai"]
+authors = [
+  {email = "glz15757339816@gmail.com"},
+  {name = "Ant1"}
+]
+maintainers = [
+  {name = "Ant1", email = "glz15757339816@gmail.com"}
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3.12"
+]
+
+dependencies = [
+  "json",
+  "time",
+  "datetime",
+  "pathlib",
+]
+
+[project.optional-dependencies]
+test = []
+
+[project.urls]
+homepage = "https://github.com/Ant1816/nonebot-plugin-pjsekaihelper"
+documentation = "https://github.com/Ant1816/nonebot-plugin-pjsekaihelper/blob/master/README.md"
+repository = "https://github.com/Ant1816/nonebot-plugin-pjsekaihelper"
+changelog = "https://github.com/Ant1816/nonebot-plugin-pjsekaihelper/commits/master/"
