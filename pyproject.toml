@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-pjsekaihelper"
-version = "1.0.9"
+version = "1.0.11"
 description = "世界计划插件，拥有组建车队等功能，持续开发中"
 readme = "README.md"
 requires-python = ">=3.8"
