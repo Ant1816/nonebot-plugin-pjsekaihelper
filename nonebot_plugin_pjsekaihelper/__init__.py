@@ -6,7 +6,7 @@ from pickle import EMPTY_LIST
 from nonebot import require
 from pathlib import Path
 
-from nonebot.internal.params import ArgPlainText
+from nonebot.params import ArgPlainText
 
 require("nonebot_plugin_localstore")
 import nonebot_plugin_localstore as store
@@ -18,7 +18,6 @@ from nonebot import get_driver
 from nonebot.permission import SUPERUSER
 from nonebot.adapters.onebot.v11 import GroupMessageEvent, Bot, Event, MessageEvent, PrivateMessageEvent, MessageSegment
 
-global room_data
 
 SUPERUSERS = get_driver().config.superusers
 __plugin_meta__ = PluginMetadata(
@@ -30,11 +29,12 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.0.13",
+            "version": "1.0.14",
             "priority": 10,
     },
 )
 
+room_data = []
 plugin_data_dir: Path = store.get_plugin_data_dir()
 ROOM_LIST_FILE: Path = store.get_plugin_data_file("room_list.json")
 
@@ -43,19 +43,22 @@ if not ROOM_LIST_FILE.exists():  # 判断文件存在
 
 
 def load_all_room():
+    global room_data
     try:
         with open(ROOM_LIST_FILE, 'r', encoding='utf-8') as file:
-            globals()['room_data'] = json.load(file)
+            room_data = json.load(file)
     except FileNotFoundError:
-        globals()['room_data'] = []
-    if globals()['room_data']:
-        for room in globals()['room_data']:
-            last = datetime.datetime.strptime(room["CreatedTime"], "%H:%M:%S")
-            if str(datetime.datetime.strptime(time.strftime('%H:%M:%S', time.localtime()), "%H:%M:%S") - last) >= '1800':
-                globals()['room_data'].remove(room)
+        room_data = []
+    if room_data:
+        for room in room_data:
+            last = datetime.datetime.strptime(room["CreatedTime"], "%Y-%m-%d %H:%M:%S")
+            now = datetime.datetime.strptime(time.strftime('%Y-%m-%d %H:%M:%S'), "%Y-%m-%d %H:%M:%S")
+            duration = now - last
+            if duration.days > 0 or duration.seconds > 1800:
+                room_data.remove(room)
                 with open(ROOM_LIST_FILE, 'w', encoding='utf-8') as file:
-                    json.dump(globals()['room_data'], file, ensure_ascii=False, indent=2)
-    return globals()['room_data']
+                    json.dump(room_data, file, ensure_ascii=False, indent=2)
+    return room_data
 
 
 help_ = on_command("pjsk help", priority=10, block=True)
@@ -90,7 +93,7 @@ async def handle_create_room(bot: Bot, event: GroupMessageEvent, args: Message =
                 "RoomNumber": room_number,
                 "Server": ServerInfo,
                 "CreatedBy": event.get_user_id(),
-                "CreatedTime": time.strftime('%H:%M:%S', time.localtime())
+                "CreatedTime": time.strftime('%Y-%m-%d %H:%M:%S')
             }
             new_room_data.append(new_room)
         else:
@@ -141,7 +144,8 @@ async def handle_room_delete(bot: Bot, event: GroupMessageEvent, args: Message =
 
 @roomreset.handle()
 async def handle_room_reset(bot: Bot, event: GroupMessageEvent):
+    global room_data
     with open(ROOM_LIST_FILE, 'w', encoding='utf-8') as file:
         json.dump([], file, ensure_ascii=False, indent=2)
-    globals()['room_data'] = []
+    room_data = []
     await roomreset.finish("重置成功")
