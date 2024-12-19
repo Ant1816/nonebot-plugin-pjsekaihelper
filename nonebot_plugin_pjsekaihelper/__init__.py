@@ -7,6 +7,14 @@ from nonebot import require
 from pathlib import Path
 
 from nonebot.params import ArgPlainText
+from nonebot import require
+from nonebot.plugin import PluginMetadata, inherit_supported_adapters
+
+require("nonebot_plugin_alconna")
+require("nonebot_plugin_htmlrender")
+
+from . import __main__ as __main__  # noqa: E402
+from .config import ConfigModel  # noqa: E402
 
 require("nonebot_plugin_localstore")
 import nonebot_plugin_localstore as store
@@ -22,14 +30,14 @@ from nonebot.adapters.onebot.v11 import GroupMessageEvent, Bot, Event, MessageEv
 SUPERUSERS = get_driver().config.superusers
 __plugin_meta__ = PluginMetadata(
     name="nonebot_plugin_pjsekaihelper",
-    description="世界计划插件，拥有组建车队等功能，持续开发中",
+    description="世界计划插件，拥有组建车队、生成角色表情包等功能，持续开发中",
     usage="发送 pjsk help 查看帮助",
     type="application",
     supported_adapters={"~onebot.v11"},
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.0.19",
+            "version": "1.1.0",
             "priority": 10,
     },
 )
@@ -71,12 +79,17 @@ roomreset = on_command("重置车队列表", priority=10, block=True, permission
 @help_.handle()
 async def handle_help_message(bot: Bot, event: GroupMessageEvent):
     message = (
-        "Project Sekai helper 世界计划小助手帮助\n"
+        "Project Sekai helper 世界计划小助手帮助\n\n"
+        "Project Sekai 车队管理\n"
         "！！！检测到车队创建时间超过半小时会自动删除哦！！！\n"
         "建车队/组队/组车队 <房间号> <服务器(日/台/韩/国际/中)>\n"
         "删除车队/删队/删车队 <房间号>\n"
         "车队号/房间号/车号/有烤吗/有烤嘛/ycm\n"
-        "重置车队列表(仅限SUPERUSER)\n"
+        "重置车队列表(仅限SUPERUSER)\n\n"
+        "Project Sekai 表情生成\n"
+        "pjsk表情列表 查看所有角色表情包\n"
+        "pjsk表情 进入交互创建模式\n"
+        "pjsk表情 -h 进入Shell-like创建模式"
     )
     await help_.send(message)
 

@@ -75,7 +75,14 @@ _✨ 世界计划小助手 ✨_
 
 | 配置项 | 必填 | 默认值 | 说明 |
 |:-----:|:----:|:----:|:----:|
-| 无 | 无 | 无 | 无 |
+| `PJSK_ASSETS_PREFIX` |  否  |   ...   | TheOriginalAyaka/sekai-stickers 仓库 GitHubUserContent 地址列表  |
+|  `PJSK_REPO_PREFIX`  |  否  |   ...   |                本仓库 GitHubUserContent 地址列表                 |
+| `PJSK_HELP_AS_IMAGE` |  否  | `True`  |                   是否将帮助信息渲染为图片发送                   |
+|     `PJSK_REPLY`     |  否  | `True`  |                        是否回复消息发送者                        |
+|   `PJSK_REQ_RETRY`   |  否  |   `1`   |                    插件请求 URL 时的重试次数                     |
+|   `PJSK_REQ_PROXY`   |  否  | `None`  |                     插件下载资源时使用的代理                     |
+|   `PJSK_USE_CACHE`   |  否  | `True`  |                    是否缓存插件生成的所有图片                    |
+|  `PJSK_CLEAR_CACHE`  |  否  | `False` | 是否在插件启动时清空缓存文件夹，禁用时只会清理非表情包的图片缓存 |
 
 ## 🎉 使用
 ### 指令表
@@ -87,14 +94,17 @@ _✨ 世界计划小助手 ✨_
 | 车队号/房间号/车号/有烤吗/有烤嘛/ycm | 群员 | 否 | 群聊 | 发送房间列表 |
 | 重置车队列表 | SUPERUSER | 否 | 群聊 | 清空房间列表 |
 
-## ⌨ 开发计划
+## ⌨  开发计划
 &#x1F7E9; 跨群车队组建
 
-&#x1F7E8; 表情包生成
+&#x1F7E9; 表情包生成
 
-&#x1F7E5; 随机抽卡
+&#x1F7E8; 随机抽卡
 
 &#x1F7E5; 用户数据处理
- 
+
+## 💡 致谢
+感谢 [SekaiStickers](https://github.com/lgc-NB2Dev/nonebot-plugin-pjsk/) 的表情包生成源码 （~~我是抄的一点没改~~）
+
 ## 效果图
 ![效果图](https://raw.githubusercontent.com/Ant1816/Ant1816/refs/heads/main/pjsekai.png)

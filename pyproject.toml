@@ -1,11 +1,11 @@
 [project]
 name = "nonebot-plugin-pjsekaihelper"
-version = "1.0.19"
+version = "1.1.0"
 description = "世界计划插件，拥有组建车队等功能，持续开发中"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = {file = "LICENSE"}
-keywords = ["nonebot2", "projectsekai"]
+keywords = ["nonebot2", "projectsekai", "pjsk"]
 authors = [
   {email = "glz15757339816@gmail.com"},
   {name = "Ant1"}
@@ -14,14 +14,21 @@ maintainers = [
   {name = "Ant1", email = "glz15757339816@gmail.com"}
 ]
 classifiers = [
+  "License :: OSI Approved :: MIT License",
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3.12"
 ]
 
 dependencies = [
-  "nonebot2>=2.3.0",
+  "nonebot2>=2.3.1",
   "nonebot_plugin_localstore>=0.7.1",
-  "nonebot-adapter-onebot>=2.1.0"
+  "nonebot-adapter-onebot>=2.1.0",
+  "httpx>=0.27.0",
+  "anyio>=4.4.0",
+  "nonebot-plugin-alconna>=0.48.0",
+  "nonebot-plugin-htmlrender>=0.3.2",
+  "jinja2>=3.1.4",
+  "yarl>=1.9.4",
 ]
 
 [project.optional-dependencies]
