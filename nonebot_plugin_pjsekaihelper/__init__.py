@@ -29,7 +29,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.0.16",
+            "version": "1.0.17",
             "priority": 10,
     },
 )
@@ -85,21 +85,34 @@ async def handle_help_message(bot: Bot, event: GroupMessageEvent):
 async def handle_create_room(bot: Bot, event: GroupMessageEvent, args: Message = CommandArg()):
     new_room_data = load_all_room()
     args_list = args.extract_plain_text().split()
+
     if len(args_list) == 2:
         room_number = args_list[0]
         ServerInfo = args_list[1]
-        if room_number.isdecimal() and ServerInfo in ["日", "台", "韩", "国际", "中"]:
-            new_room = {
-                "RoomNumber": room_number,
-                "Server": ServerInfo,
-                "CreatedBy": event.get_user_id(),
-                "CreatedTime": time.strftime('%Y-%m-%d %H:%M:%S')
-            }
-            new_room_data.append(new_room)
-        else:
-            await roomcreate.finish("房间创建失败 请检查参数是否正确")
     else:
-        await roomcreate.finish("房间创建失败 请检查参数是否正确")
+        room_number = ''
+        ServerInfo = ''
+        args = args.extract_plain_text()
+        for i in args:
+            if i.isdigit():
+                room_number += i
+            else:
+                ServerInfo += i
+
+    if room_number.isdecimal() and ServerInfo in ["日", "台", "韩", "国际", "中"]:
+        new_room = {
+            "RoomNumber": room_number,
+            "Server": ServerInfo,
+            "CreatedBy": event.get_user_id(),
+            "CreatedTime": time.strftime('%Y-%m-%d %H:%M:%S')
+        }
+        new_room_data.append(new_room)
+    elif room_number.isdecimal():
+        await roomcreate.finish(f"""房间创建失败 请检查输入的服务器 "{ServerInfo}" 是否正确""")
+    elif ServerInfo in ["日", "台", "韩", "国际", "中"]:
+        await roomcreate.finish(f"""房间创建失败 请检查输入的房间号 {room_number} 是否正确""")
+    else:
+        await roomcreate.finish("房间创建失败 请检查参数是否正确：<房间号> <服务器>")
 
     with open(ROOM_LIST_FILE, 'w', encoding='utf-8') as file:
         json.dump(new_room_data, file, ensure_ascii=False, indent=2)
