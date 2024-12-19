@@ -29,7 +29,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.0.18",
+            "version": "1.0.19",
             "priority": 10,
     },
 )
@@ -103,7 +103,7 @@ async def handle_create_room(bot: Bot, event: GroupMessageEvent, args: Message =
         new_room = {
             "RoomNumber": room_number,
             "Server": ServerInfo,
-            "CreatedBy": event.get_user_id(),
+            "CreatedBy": event.sender.nickname + " (" + event.get_user_id() + ")",
             "CreatedTime": time.strftime('%Y-%m-%d %H:%M:%S')
         }
         new_room_data.append(new_room)
