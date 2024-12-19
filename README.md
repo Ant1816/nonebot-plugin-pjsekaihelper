@@ -88,10 +88,13 @@ _✨ 世界计划小助手 ✨_
 | 重置车队列表 | SUPERUSER | 否 | 群聊 | 清空房间列表 |
 
 ## ⌨ 开发计划
-- [x] 跨群车队组建
-- &#x1F7E8; 表情包生成
-- [ ] 随机抽卡
-- [ ] 用户数据处理
+&#x1F7E9; 跨群车队组建
+
+&#x1F7E8; 表情包生成
+
+&#x1F7E5; 随机抽卡
+
+&#x1F7E5; 用户数据处理
  
 ## 效果图
 ![效果图](https://raw.githubusercontent.com/Ant1816/Ant1816/refs/heads/main/pjsekai.png)
