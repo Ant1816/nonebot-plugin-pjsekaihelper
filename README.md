@@ -109,7 +109,9 @@ _✨ 世界计划小助手 ✨_
 &#x1F7E8; 用户数据处理
 
 ## 💡 致谢
-感谢 [SekaiStickers](https://github.com/lgc-NB2Dev/nonebot-plugin-pjsk/) 的表情包生成源码 （~~我是抄的一点没改~~）
+感谢 [lgc-NB2Dev/SekaiStickers](https://github.com/lgc-NB2Dev/nonebot-plugin-pjsk/) 的表情包生成源码 （~~我是抄的一点没改~~）
+
+卡面数据来源：[Sekai.best](https://sekai.best/card)
 
 ## 效果图
 ![效果图](https://raw.githubusercontent.com/Ant1816/Ant1816/refs/heads/main/pjsekai.png)
