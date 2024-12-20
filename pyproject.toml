@@ -1,7 +1,7 @@
 [project]
 name = "nonebot-plugin-pjsekaihelper"
-version = "1.1.2"
-description = "世界计划插件，拥有组建车队等功能，持续开发中"
+version = "1.2.0"
+description = "世界计划插件，拥有组建车队、生成角色表情包、模拟抽卡等功能，持续开发中"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
@@ -29,6 +29,7 @@ dependencies = [
   "nonebot-plugin-htmlrender>=0.3.2",
   "jinja2>=3.1.4",
   "yarl>=1.9.4",
+  "requests>=2.32.2",
 ]
 
 [project.optional-dependencies]
