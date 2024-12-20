@@ -40,7 +40,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "priority": 10,
     },
 )
@@ -220,17 +220,17 @@ async def handle_room_reset(bot: Bot, event: GroupMessageEvent):
 @gachasimulate.handle()
 async def handle_gacha(bot: Bot, event: GroupMessageEvent):
     url_tuple = generate_nums()
+    i = 0
 
     while True:
-        i = 0
         try:
             normalurl = url_tuple[0]
             after_training_url = url_tuple[1]
             break
-        except Exception:
+        except TypeError:
             i += 1
             await gachasimulate.send(f"生成出现问题...重试中...{i}次")
-            generate_nums()
+            url_tuple = generate_nums()
 
     if after_training_url == '':
         await gachasimulate.send(MessageSegment.image(normalurl))
