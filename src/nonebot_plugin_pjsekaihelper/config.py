@@ -1,9 +1,8 @@
-# Distributed under MIT license. See file LICENSE for detail or copy at https://opensource.org/licenses/MIT */
 from typing import Any, List, Optional, Set
 from typing_extensions import Annotated
 
 from nonebot import get_plugin_config
-from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
 class ConfigModel(BaseModel):
@@ -20,8 +19,8 @@ class ConfigModel(BaseModel):
     )
     pjsk_repo_prefix: List[Annotated[str, HttpUrl]] = Field(
         [
-            "https://raw.gitmirror.com/Ant1816/nonebot-plugin-pjsekaihelper/main/",
-            "https://raw.githubusercontent.com/Ant1816/nonebot-plugin_-pjsekaihelper/main/",
+            "https://raw.gitmirror.com/Ant1816/nonebot-plugin-pjsekaihelper/master/",
+            "https://raw.githubusercontent.com/Ant1816/nonebot-plugin_-pjsekaihelper/master/",
         ],
     )
 
@@ -30,7 +29,8 @@ class ConfigModel(BaseModel):
     pjsk_use_cache: bool = True
     pjsk_clear_cache: bool = False
 
-    @validator("pjsk_assets_prefix", "pjsk_repo_prefix", pre=True)
+    # 将@validator替换为@field_validator，并移除pre
+    @field_validator("pjsk_assets_prefix", "pjsk_repo_prefix", mode="before")
     def str_to_list(cls, v: Any):  # noqa: N805
         if isinstance(v, str):
             v = [v]
@@ -38,9 +38,10 @@ class ConfigModel(BaseModel):
             raise ValueError("value should be a iterable of strings")
         return v
 
-    @validator("pjsk_assets_prefix", "pjsk_repo_prefix")
+    # 处理字段验证，去除多余的@validator
+    @field_validator("pjsk_assets_prefix", "pjsk_repo_prefix")
     def append_slash(cls, v: List[str]) -> List[str]:  # noqa: N805
-        return [v if v.endswith("/") else f"{v}/" for v in v]
+        return [f"{v}/" if not v.endswith("/") else v for v in v]
 
 
 config = get_plugin_config(ConfigModel)

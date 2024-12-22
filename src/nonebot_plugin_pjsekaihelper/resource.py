@@ -1,4 +1,3 @@
-# Distributed under MIT license. See file LICENSE for detail or copy at https://opensource.org/licenses/MIT */
 import asyncio
 import json
 import random
@@ -12,32 +11,27 @@ from nonebot import get_driver, logger
 from nonebot.compat import type_validate_json
 from pydantic import BaseModel, Field
 
+import nonebot_plugin_localstore as store
 from .config import config
 from .utils import ResponseType, append_prefix, async_request, with_semaphore
 
-DATA_FOLDER = Path.cwd() / "data" / "pjsk"
+# 使用 localstore 获取插件专属数据目录
+DATA_FOLDER = store.get_plugin_data_dir()
 FONT_FOLDER = DATA_FOLDER / "fonts"
 RESOURCE_FOLDER = DATA_FOLDER / "resource"
 STICKER_INFO_CACHE = DATA_FOLDER / "characters.json"
-
 CACHE_FOLDER = DATA_FOLDER / "cache"
-if not CACHE_FOLDER.exists():
-    CACHE_FOLDER.mkdir(parents=True)
-else:
-    [
-        x.unlink()
-        for x in (
-            CACHE_FOLDER.iterdir()
-            if config.pjsk_clear_cache
-            else CACHE_FOLDER.glob("*.jpeg")
-        )
-    ]
-
 FONT_PATH = FONT_FOLDER / "YurukaFangTang.ttf"
 
-for _folder in (DATA_FOLDER, FONT_FOLDER, RESOURCE_FOLDER):
-    if not _folder.exists():
-        _folder.mkdir(parents=True)
+# 初始化目录
+for folder in (DATA_FOLDER, FONT_FOLDER, RESOURCE_FOLDER, CACHE_FOLDER):
+    folder.mkdir(parents=True, exist_ok=True)
+
+# 清理缓存
+if config.pjsk_clear_cache:
+    [file.unlink() for file in CACHE_FOLDER.iterdir()]
+else:
+    [file.unlink() for file in CACHE_FOLDER.glob("*.jpeg")]
 
 TEMPLATES_FOLDER = Path(__file__).parent / "templates"
 JINJA_ENV = jinja2.Environment(
@@ -125,10 +119,6 @@ async def check_and_download_font():
 
         logger.opt(colors=True).info(f"Successfully downloaded font <y>{font_name}</y>")
 
-    # tasks: List[Coroutine] = [
-    #     download(path.name) for path in FONT_PATHS if not path.exists()
-    # ]
-    # await asyncio.gather(*tasks)
     if not FONT_PATH.exists():
         await download(FONT_PATH.name)
 
@@ -167,8 +157,7 @@ async def check_and_download_stickers():
         urls = append_prefix(f"public/img/{path_str}", config.pjsk_assets_prefix)
         await path.write_bytes(await async_request(*urls))
 
-    logger.debug("Checking and downloading sticker assets")
-    tasks: List[Coroutine] = [
+    tasks = [
         download(sticker_info.img)
         for sticker_info in LOADED_STICKER_INFO
         if not (RESOURCE_FOLDER / sticker_info.img).exists()

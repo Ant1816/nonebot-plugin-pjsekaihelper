@@ -3,7 +3,7 @@ import time
 import datetime
 import os
 import random
-import requests
+import httpx
 from pickle import EMPTY_LIST
 
 from nonebot import require
@@ -35,12 +35,13 @@ __plugin_meta__ = PluginMetadata(
     name="nonebot_plugin_pjsekaihelper",
     description="世界计划插件，拥有组建车队、生成角色表情包、模拟抽卡等功能，持续开发中",
     usage="发送 pjsk help 查看帮助",
+    config=ConfigModel,
     type="application",
     supported_adapters={"~onebot.v11"},
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "priority": 10,
     },
 )
@@ -73,7 +74,7 @@ def load_all_room():
     return room_data
 
 
-def generate_nums():
+async def generate_nums():
     Num1 = str(random.randint(1, 26))
     Num2 = str(random.randint(1, 50))
 
@@ -93,15 +94,17 @@ def generate_nums():
 
     normal_url = f"{STATIC_IMAGE_URL}res{Num1}_no{Num2}_rip/card_normal.png"
     after_training_url = f"{STATIC_IMAGE_URL}res{Num1}_no{Num2}_rip/card_after_training.png"
-    r_normal = requests.get(normal_url)
-    r_after_training = requests.get(after_training_url)
+
+    async with httpx.AsyncClient() as client:  # 异步客户端
+        r_normal = await client.get(normal_url)
+        r_after_training = await client.get(after_training_url)
 
     if (r_normal.status_code == 200 or r_normal.status_code == 304) and (r_after_training.status_code == 200 or r_after_training.status_code == 304):
         return normal_url, after_training_url
     elif r_normal.status_code == 200 or r_normal.status_code == 304:
         return normal_url, ''
     else:
-        generate_nums()
+        return await generate_nums()  # 递归调用，如果请求失败则重试
 
 
 help_ = on_command("pjsk help", priority=10, block=True)
@@ -219,7 +222,7 @@ async def handle_room_reset(bot: Bot, event: GroupMessageEvent):
 
 @gachasimulate.handle()
 async def handle_gacha(bot: Bot, event: GroupMessageEvent):
-    url_tuple = generate_nums()
+    url_tuple = await generate_nums()
     i = 0
 
     while True:
@@ -230,7 +233,7 @@ async def handle_gacha(bot: Bot, event: GroupMessageEvent):
         except TypeError:
             i += 1
             await gachasimulate.send(f"生成出现问题...重试中...{i}次")
-            url_tuple = generate_nums()
+            url_tuple = await generate_nums()
 
     if after_training_url == '':
         await gachasimulate.send(MessageSegment.image(normalurl))
