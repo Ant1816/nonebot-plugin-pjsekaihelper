@@ -19,7 +19,7 @@ require("nonebot_plugin_htmlrender")
 from . import __main__ as __main__  # noqa: E402
 from .config import ConfigModel  # noqa: E402
 
-require("nonebot_plugin_localstore")
+
 import nonebot_plugin_localstore as store
 from nonebot.plugin import PluginMetadata
 from nonebot import on_command
@@ -41,7 +41,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.2.3",
+            "version": "1.2.4",
             "priority": 10,
     },
 )
