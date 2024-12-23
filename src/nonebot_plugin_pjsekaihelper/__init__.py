@@ -13,6 +13,7 @@ from nonebot.params import ArgPlainText
 from nonebot import require
 from nonebot.plugin import PluginMetadata, inherit_supported_adapters
 
+require("nonebot_plugin_localstore")
 require("nonebot_plugin_alconna")
 require("nonebot_plugin_htmlrender")
 
@@ -41,7 +42,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.2.4",
+            "version": "1.2.5",
             "priority": 10,
     },
 )
