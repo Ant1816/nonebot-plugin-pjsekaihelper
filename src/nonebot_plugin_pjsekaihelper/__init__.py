@@ -42,7 +42,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.2.7",
+            "version": "1.2.8",
             "priority": 10,
     },
 )
@@ -124,7 +124,7 @@ async def handle_help_message(bot: Bot, event: GroupMessageEvent):
         "Project Sekai helper 世界计划小助手帮助\n\n"
         "Project Sekai 车队管理\n"
         "！！！检测到车队创建时间超过半小时会自动删除哦！！！\n"
-        "建车队/组队/组车队 <房间号> <服务器(日/台/韩/国际/中)>\n"
+        "建车队/组队/组车队 <房间号> <服务器(日/台/韩/国际/中)(不填则默认日服)>\n"
         "删除车队/删队/删车队 <房间号>\n"
         "车队号/房间号/车号/有烤吗/有烤嘛/ycm\n"
         "重置车队列表(仅限SUPERUSER)\n\n"
@@ -164,8 +164,14 @@ async def handle_create_room(bot: Bot, event: GroupMessageEvent, args: Message =
             "CreatedTime": time.strftime('%Y-%m-%d %H:%M:%S')
         }
         new_room_data.append(new_room)
-    elif room_number.isdecimal():
-        await roomcreate.finish(f"""房间创建失败 请检查输入的服务器 "{ServerInfo}" 是否正确""")
+    elif room_number.isdecimal() and ServerInfo == '':
+        new_room = {
+            "RoomNumber": room_number,
+            "Server": "日",
+            "CreatedBy": event.sender.nickname + " (" + event.get_user_id() + ")",
+            "CreatedTime": time.strftime('%Y-%m-%d %H:%M:%S')
+        }
+        new_room_data.append(new_room)
     elif ServerInfo in ["日", "台", "韩", "国际", "中"]:
         await roomcreate.finish(f"""房间创建失败 请检查输入的房间号 {room_number} 是否正确""")
     else:
