@@ -10,11 +10,11 @@
 
 _✨ 世界计划小助手 ✨_
 
-![LICENSE](https://img.shields.io/github/license/Ant1816/nonebot-plugin-pjsekaihelper.svg)
+[![LICENSE](https://img.shields.io/github/license/Ant1816/nonebot-plugin-pjsekaihelper.svg)](https://github.com/Ant1816/nonebot-plugin-pjsekaihelper/blob/master/LICENSE)
 [![PYPI](https://img.shields.io/pypi/v/nonebot-plugin-pjsekaihelper.svg)](https://pypi.python.org/pypi/nonebot-plugin-pjsekaihelper)
-![Python3.9+](https://img.shields.io/badge/Python-3.9+-blue)
-![nonebot2](https://img.shields.io/badge/NoneBot2-2.3.1+-red)
-![onebotv11](https://img.shields.io/badge/OneBot-v11-yellow)
+[![Python3.9+](https://img.shields.io/badge/Python-3.9+-blue)](https://www.python.org)
+[![nonebot2](https://img.shields.io/badge/NoneBot2-2.3.1+-red)](https://github.com/nonebot/nonebot2)
+[![onebotv11](https://img.shields.io/badge/OneBot-v11-yellow)](https://github.com/botuniverse/onebot-11)
 
 </div>
 
