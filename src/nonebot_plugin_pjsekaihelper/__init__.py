@@ -33,7 +33,7 @@ from nonebot.adapters.onebot.v11 import GroupMessageEvent, Bot, Event, MessageEv
 
 SUPERUSERS = get_driver().config.superusers
 __plugin_meta__ = PluginMetadata(
-    name="nonebot_plugin_pjsekaihelper",
+    name="世界计划小助手",
     description="世界计划插件，拥有组建车队、生成角色表情包、模拟抽卡等功能，持续开发中",
     usage="发送 pjsk help 查看帮助",
     config=ConfigModel,
@@ -42,7 +42,7 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/Ant1816/nonebot-plugin-pjsekaihelper",
     extra={
             "author": "Ant1",
-            "version": "1.2.9",
+            "version": "1.2.10",
             "priority": 10,
     },
 )
